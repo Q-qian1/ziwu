@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>子午权限 - 精英游戏账号服务</title>
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+  background: #08080d;
+  color: #e0e0e0;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== ANIMATED BACKGROUND ===== */
+.bg-canvas {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
+  pointer-events: none;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0d0d16; }
+::-webkit-scrollbar-thumb { background: #2a2a3a; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #3a3a4e; }
+
+/* ===== CONTAINER ===== */
+.container { max-width: 1280px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
+
+/* ===== NAVIGATION ===== */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 16px 0;
+  transition: background 0.4s, box-shadow 0.4s, padding 0.4s;
+}
+.nav.scrolled {
+  background: rgba(8,8,13,0.85);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.04), 0 8px 32px rgba(0,0,0,0.4);
+  padding: 10px 0;
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: 1280px; margin: 0 auto; padding: 0 32px;
+}
+.nav-logo {
+  font-size: 1.25rem; font-weight: 700; letter-spacing: 0.05em;
+  background: linear-gradient(135deg, #d4a853 0%, #e8c97a 30%, #bf953f 60%, #f6d365 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.nav-links { display: flex; gap: 36px; list-style: none; }
+.nav-links a {
+  color: #888; text-decoration: none; font-size: 0.9rem; font-weight: 500;
+  letter-spacing: 0.03em; transition: color 0.3s; position: relative;
+}
+.nav-links a:hover, .nav-links a.active { color: #d4a853; }
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px;
+  background: #d4a853; transition: width 0.3s;
+}
+.nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh; display: flex; align-items: center; position: relative; z-index: 1;
+  padding-top: 80px;
+}
+.hero-content { max-width: 720px; }
+.hero-tag {
+  display: inline-block; padding: 6px 16px; border: 1px solid rgba(212,168,83,0.3);
+  border-radius: 100px; font-size: 0.8rem; letter-spacing: 0.12em; color: #d4a853;
+  margin-bottom: 28px; font-weight: 500;
+  background: rgba(212,168,83,0.04);
+}
+.hero h1 {
+  font-size: clamp(2.8rem, 6vw, 4.8rem); font-weight: 800; line-height: 1.1;
+  letter-spacing: -0.02em; margin-bottom: 20px;
+  background: linear-gradient(180deg, #fff 0%, #c0b090 50%, #8a7a58 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-desc {
+  font-size: 1.15rem; color: #888; max-width: 500px; line-height: 1.8;
+  margin-bottom: 40px;
+}
+.hero-cta {
+  display: flex; gap: 16px; flex-wrap: wrap;
+}
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 32px; border-radius: 8px;
+  background: linear-gradient(135deg, #b8860b 0%, #d4a853 50%, #8b6914 100%);
+  color: #0a0a0f; font-weight: 700; text-decoration: none; font-size: 0.95rem;
+  letter-spacing: 0.03em; border: none; cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 24px rgba(212,168,83,0.2);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 36px rgba(212,168,83,0.35);
+}
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 32px; border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.15); color: #ccc;
+  background: transparent; font-weight: 600; text-decoration: none;
+  font-size: 0.95rem; letter-spacing: 0.03em;
+  transition: border-color 0.3s, color 0.3s, background 0.3s;
+}
+.btn-ghost:hover {
+  border-color: rgba(212,168,83,0.5); color: #d4a853;
+  background: rgba(212,168,83,0.05);
+}
+
+/* Hero visual */
+.hero-visual {
+  position: absolute; right: -80px; top: 50%; transform: translateY(-50%);
+  width: 500px; height: 500px; pointer-events: none;
+}
+.hero-ring {
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(212,168,83,0.08);
+  animation: ringPulse 4s ease-in-out infinite;
+}
+.hero-ring:nth-child(2) { inset: 40px; animation-delay: 0.5s; border-color: rgba(212,168,83,0.06); }
+.hero-ring:nth-child(3) { inset: 80px; animation-delay: 1s; border-color: rgba(212,168,83,0.04); }
+@keyframes ringPulse {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.05); opacity: 0.7; }
+}
+
+/* ===== SECTION COMMON ===== */
+.section { padding: 100px 0; position: relative; z-index: 1; }
+.section-label {
+  display: inline-block; font-size: 0.75rem; letter-spacing: 0.15em;
+  color: #d4a853; font-weight: 600; margin-bottom: 12px; text-transform: uppercase;
+}
+.section h2 {
+  font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 700; letter-spacing: -0.01em;
+  margin-bottom: 16px; color: #f0f0f0;
+}
+.section-subtitle { color: #777; font-size: 1rem; max-width: 480px; margin-bottom: 56px; }
+
+/* ===== SERVICES ===== */
+.services-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+}
+.service-card {
+  position: relative; border-radius: 16px; padding: 40px 36px;
+  background: rgba(18,18,28,0.6);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  overflow: hidden;
+}
+.service-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212,168,83,0.3), transparent);
+  opacity: 0; transition: opacity 0.3s;
+}
+.service-card:hover { transform: translateY(-4px); border-color: rgba(212,168,83,0.15); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+.service-card:hover::before { opacity: 1; }
+.service-icon {
+  width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  margin-bottom: 24px; font-size: 1.4rem;
+  background: rgba(212,168,83,0.08); border: 1px solid rgba(212,168,83,0.15);
+}
+.service-card h3 { font-size: 1.3rem; font-weight: 600; margin-bottom: 8px; color: #e8e8e8; }
+.service-card p { color: #888; font-size: 0.95rem; line-height: 1.7; margin-bottom: 16px; }
+.service-price {
+  font-size: 2rem; font-weight: 700;
+  background: linear-gradient(135deg, #d4a853, #f6d365);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.service-note {
+  font-size: 0.78rem; color: #666; margin-top: 12px; line-height: 1.6;
+}
+
+/* ===== ACCOUNT CARDS ===== */
+.accounts-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 24px;
+  align-items: stretch;
+}
+.account-card {
+  display: flex; flex-direction: column;
+  position: relative; border-radius: 20px; overflow: hidden;
+  background: rgba(16,16,26,0.7);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.04);
+  transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.35s;
+}
+.account-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(212,168,83,0.1);
+}
+/* Status badge */
+.account-badge {
+  position: absolute; top: 16px; right: 16px; z-index: 2;
+  padding: 5px 14px; border-radius: 100px; font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.badge-delivered {
+  background: rgba(76,175,80,0.12); color: #66bb6a; border: 1px solid rgba(76,175,80,0.2);
+}
+.badge-pending {
+  background: rgba(255,167,38,0.12); color: #ffa726; border: 1px solid rgba(255,167,38,0.2);
+}
+
+/* Image gallery inside card */
+.account-gallery {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px;
+  aspect-ratio: 4 / 3; overflow: hidden;
+  flex-shrink: 0;
+}
+.account-gallery img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.4s, filter 0.4s;
+}
+.account-gallery img:hover { transform: scale(1.08); filter: brightness(1.1); }
+.account-gallery.single-col { grid-template-columns: 1fr; }
+.account-gallery.two-col { grid-template-columns: repeat(2, 1fr); }
+.account-gallery.four-col { grid-template-columns: repeat(2, 1fr); }
+
+.account-body {
+  padding: 24px 22px;
+  flex: 1;
+  display: flex; flex-direction: column;
+}
+.account-title {
+  font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em;
+  color: #d4a853; margin-bottom: 10px; font-weight: 600;
+  flex-shrink: 0;
+}
+.account-skin {
+  font-size: 0.9rem; color: #bbb; line-height: 1.65; margin-bottom: 16px;
+  max-height: 72px; overflow: hidden;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+  flex-shrink: 0;
+}
+.account-meta {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  margin-bottom: 16px; padding: 14px 16px; border-radius: 10px;
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04);
+  flex-shrink: 0;
+}
+.meta-item {}
+.meta-label { font-size: 0.7rem; color: #666; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
+.meta-value { font-size: 0.88rem; color: #ddd; font-weight: 500; }
+.account-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.04);
+  margin-top: auto;
+  flex-shrink: 0;
+}
+.account-price {
+  font-size: 1.4rem; font-weight: 700;
+  background: linear-gradient(135deg, #d4a853, #f6d365);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.account-id { font-size: 0.8rem; color: #555; font-weight: 500; }
+
+/* ===== CONTACT ===== */
+.contact-section {
+  padding: 100px 0 60px; position: relative; z-index: 1;
+}
+.contact-card {
+  max-width: 560px; margin: 0 auto; text-align: center; padding: 56px 40px;
+  border-radius: 24px;
+  background: rgba(18,18,30,0.5);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.05);
+  position: relative; overflow: hidden;
+}
+.contact-card::before {
+  content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 200px; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212,168,83,0.4), transparent);
+}
+.contact-card h2 { margin-bottom: 12px; }
+.contact-wechat {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 12px 28px; border-radius: 12px; margin-top: 20px;
+  background: rgba(212,168,83,0.06); border: 1px solid rgba(212,168,83,0.18);
+  color: #d4a853; font-size: 1.05rem; font-weight: 600;
+  letter-spacing: 0.03em; transition: background 0.3s, border-color 0.3s;
+}
+.contact-wechat:hover { background: rgba(212,168,83,0.12); border-color: rgba(212,168,83,0.35); }
+.wechat-icon {
+  width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
+}
+.wechat-icon svg { width: 20px; height: 20px; fill: #d4a853; }
+
+/* ===== FOOTER ===== */
+.footer {
+  text-align: center; padding: 32px 0; position: relative; z-index: 1;
+  border-top: 1px solid rgba(255,255,255,0.03);
+}
+.footer p { color: #444; font-size: 0.8rem; }
+
+/* ===== RESPONSIVE ===== */
+
+/* ---- Hamburger Button (hidden on desktop) ---- */
+.hamburger {
+  display: none;
+  flex-direction: column; justify-content: center; gap: 5px;
+  width: 36px; height: 36px; padding: 6px;
+  background: transparent; border: none; cursor: pointer;
+  z-index: 200; position: relative;
+}
+.hamburger span {
+  display: block; width: 24px; height: 1.5px;
+  background: #ccc; border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+.hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ---- Tablet: 769px - 1024px ---- */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container { padding: 0 28px; }
+  .nav-inner { padding: 0 28px; }
+  .hero-visual { right: -200px; width: 340px; height: 340px; }
+  .hero-ring:nth-child(2) { inset: 28px; }
+  .hero-ring:nth-child(3) { inset: 56px; }
+  .hero h1 { font-size: clamp(2.5rem, 5vw, 3.6rem); }
+  .accounts-grid { grid-template-columns: repeat(2, 1fr); }
+  .service-card { padding: 32px 28px; }
+}
+
+/* ---- Phone: up to 768px ---- */
+@media (max-width: 768px) {
+  .container { padding: 0 20px; }
+  .nav-inner { padding: 0 20px; }
+
+  .hamburger { display: flex; }
+  .nav-links {
+    position: fixed; top: 0; right: 0; width: 280px; height: 100vh;
+    flex-direction: column; gap: 0; padding: 88px 32px 32px;
+    background: rgba(10,10,18,0.97);
+    backdrop-filter: saturate(180%) blur(24px);
+    -webkit-backdrop-filter: saturate(180%) blur(24px);
+    border-left: 1px solid rgba(255,255,255,0.04);
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 150;
+  }
+  .nav-links.open { transform: translateX(0); }
+  .nav.scrolled {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .nav-links a {
+    display: block; padding: 14px 0; font-size: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .nav-backdrop {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+    opacity: 0; pointer-events: none; z-index: 140;
+    transition: opacity 0.35s;
+  }
+  .nav-backdrop.show { opacity: 1; pointer-events: auto; }
+
+  .hero { min-height: 90vh; }
+  .hero-visual { display: none; }
+  .hero-content { max-width: 100%; }
+  .hero h1 { font-size: clamp(2.2rem, 8vw, 3rem); }
+  .hero-desc { font-size: 0.95rem; }
+
+  .section { padding: 72px 0; }
+  .section h2 { font-size: 1.8rem; }
+  .section-subtitle { margin-bottom: 40px; }
+
+  .services-grid { grid-template-columns: 1fr; }
+  .service-card { padding: 28px 24px; }
+
+  .accounts-grid { grid-template-columns: 1fr; }
+  .account-gallery { aspect-ratio: 3 / 2; }
+  .account-body { padding: 20px 18px; }
+
+  .contact-section { padding: 72px 0 48px; }
+  .contact-card { padding: 40px 24px; margin: 0 16px; }
+
+}
+
+/* ---- Small Phone: up to 480px ---- */
+@media (max-width: 480px) {
+  .container { padding: 0 16px; }
+  .nav-inner { padding: 0 16px; }
+  .nav { padding: 12px 0; }
+  .nav-logo { font-size: 1.1rem; }
+  .nav-links { width: 260px; }
+
+  .hero { min-height: 85vh; padding-top: 70px; }
+  .hero h1 { font-size: 2rem; }
+  .hero-desc { font-size: 0.88rem; margin-bottom: 28px; }
+  .hero-tag { font-size: 0.7rem; padding: 4px 12px; margin-bottom: 20px; }
+  .hero-cta { flex-direction: column; gap: 10px; }
+  .btn-primary, .btn-ghost {
+    justify-content: center; text-align: center;
+    padding: 12px 24px; font-size: 0.9rem; width: 100%;
+  }
+
+  .section { padding: 56px 0; }
+  .section h2 { font-size: 1.5rem; }
+  .section-subtitle { font-size: 0.88rem; margin-bottom: 32px; }
+
+  .service-card { padding: 22px 18px; }
+  .service-price { font-size: 1.6rem; }
+
+  .accounts-grid { gap: 16px; }
+  .account-card { border-radius: 16px; }
+  .account-gallery { aspect-ratio: 16 / 10; }
+  .account-body { padding: 16px 14px; }
+  .account-meta { padding: 10px 12px; gap: 6px; }
+  .meta-label { font-size: 0.65rem; }
+  .meta-value { font-size: 0.8rem; }
+  .account-price { font-size: 1.2rem; }
+
+  .contact-section { padding: 56px 0 40px; }
+  .contact-card { padding: 32px 18px; margin: 0 8px; border-radius: 18px; }
+
+  .contact-wechat { font-size: 0.88rem; padding: 10px 22px; }
+
+  .footer { padding: 24px 0; }
+  .footer p { font-size: 0.72rem; }
+}
+
+/* ---- Landscape Phone ---- */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero { min-height: auto; padding: 90px 0 40px; }
+  .hero h1 { font-size: 1.8rem; }
+  .hero-desc { font-size: 0.8rem; margin-bottom: 18px; }
+  .hero-tag { margin-bottom: 12px; }
+  .hero-cta { gap: 8px; }
+  .btn-primary, .btn-ghost { padding: 10px 20px; font-size: 0.82rem; }
+}
+
+/* ===== LIGHTBOX ===== */
+.lightbox {
+  position: fixed; inset: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.lightbox.active { opacity: 1; pointer-events: auto; }
+.lightbox-backdrop {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.lightbox-content {
+  position: relative; z-index: 1;
+  max-width: 92vw; max-height: 90vh;
+  display: flex; flex-direction: column; align-items: center;
+}
+.lightbox-image-wrap {
+  position: relative;
+  max-width: 90vw; max-height: 80vh;
+  border-radius: 12px; overflow: hidden;
+  box-shadow: 0 0 80px rgba(212,168,83,0.08), 0 20px 60px rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.06);
+  transform: scale(0.92);
+  transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.lightbox.active .lightbox-image-wrap { transform: scale(1); }
+.lightbox-image-wrap img {
+  display: block; max-width: 100%; max-height: 80vh;
+  object-fit: contain;
+}
+.lightbox-close {
+  position: absolute; top: -44px; right: 0;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  color: #ccc; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; transition: all 0.2s; line-height: 1;
+  z-index: 2;
+}
+.lightbox-close:hover { background: rgba(255,255,255,0.12); color: #fff; border-color: rgba(212,168,83,0.4); }
+.lightbox-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.08);
+  color: #ccc; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; transition: all 0.2s; z-index: 2;
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  user-select: none;
+}
+.lightbox-nav:hover { background: rgba(212,168,83,0.12); color: #d4a853; border-color: rgba(212,168,83,0.3); }
+.lightbox-nav:active { transform: translateY(-50%) scale(0.94); }
+.lightbox-prev { left: -58px; }
+.lightbox-next { right: -58px; }
+.lightbox-counter {
+  margin-top: 16px; color: #666; font-size: 0.8rem;
+  letter-spacing: 0.06em; font-weight: 500;
+}
+.lightbox-counter span { color: #d4a853; }
+
+@media (max-width: 768px) {
+  .lightbox-prev { left: 8px; }
+  .lightbox-next { right: 8px; }
+  .lightbox-nav { width: 36px; height: 36px; font-size: 1.1rem; }
+  .lightbox-close { top: -40px; right: 0; width: 32px; height: 32px; font-size: 1rem; }
+}
+
+/* ===== BUY BUTTON ===== */
+.btn-buy {
+  padding: 8px 22px; font-size: 0.82rem; border-radius: 6px;
+  font-family: inherit; letter-spacing: 0.04em;
+}
+
+/* ===== PAYMENT MODAL ===== */
+.pay-modal-overlay {
+  position: fixed; inset: 0; z-index: 1100;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.pay-modal-overlay.active {
+  opacity: 1; pointer-events: auto;
+}
+.pay-modal {
+  width: 420px; max-width: 93vw;
+  background: rgba(16,16,28,0.88);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 20px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.65), 0 0 0 1px rgba(212,168,83,0.06);
+  transform: translateY(24px) scale(0.95);
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  overflow: hidden;
+}
+.pay-modal::before {
+  content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 160px; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212,168,83,0.35), transparent);
+}
+.pay-modal-overlay.active .pay-modal {
+  transform: translateY(0) scale(1);
+}
+.pay-modal-content {
+  padding: 36px 32px 32px; position: relative;
+}
+.pay-modal-close {
+  position: absolute; top: 14px; right: 14px;
+  width: 30px; height: 30px; border-radius: 50%;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  color: #777; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; transition: all 0.2s; line-height: 1; z-index: 2;
+}
+.pay-modal-close:hover {
+  background: rgba(255,255,255,0.1); color: #fff;
+  border-color: rgba(212,168,83,0.3);
+}
+.pay-modal-header {
+  text-align: center; margin-bottom: 28px;
+}
+.pay-modal-product {
+  font-size: 0.76rem; color: #d4a853; text-transform: uppercase;
+  letter-spacing: 0.1em; font-weight: 600; margin-bottom: 6px;
+}
+.pay-modal-price {
+  font-size: 2.6rem; font-weight: 700; line-height: 1.1;
+  background: linear-gradient(135deg, #d4a853, #f6d365);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.pay-tabs {
+  display: flex; gap: 0; margin-bottom: 28px;
+  background: rgba(255,255,255,0.025); border-radius: 10px;
+  padding: 4px; border: 1px solid rgba(255,255,255,0.04);
+}
+.pay-tab {
+  flex: 1; padding: 10px 0; text-align: center; border-radius: 8px;
+  font-size: 0.88rem; font-weight: 600; cursor: pointer; border: none;
+  background: transparent; color: #555; font-family: inherit;
+  transition: all 0.3s;
+}
+.pay-tab.active { color: #fff; }
+.pay-tab[data-pay="wechat"].active {
+  background: rgba(7,193,96,0.13); color: #07C160;
+}
+.pay-tab[data-pay="alipay"].active {
+  background: rgba(22,119,255,0.13); color: #1677FF;
+}
+.pay-tab:hover:not(.active) { color: #999; }
+.pay-qr-section { text-align: center; }
+.pay-qr-placeholder {
+  width: 192px; height: 192px; margin: 0 auto 16px;
+  background: #ffffff; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid rgba(212,168,83,0.18);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+.pay-qr-pattern {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  gap: 5px; width: 136px; height: 136px;
+}
+.pay-qr-dot {
+  background: #1a1a1a; border-radius: 2px;
+}
+.pay-qr-dot.empty { background: transparent; }
+.pay-qr-hint {
+  color: #666; font-size: 0.82rem; margin-top: 2px; letter-spacing: 0.02em;
+}
+
+/* Payment modal responsive */
+@media (max-width: 480px) {
+  .pay-modal { border-radius: 16px; }
+  .pay-modal-content { padding: 28px 20px 24px; }
+  .pay-modal-price { font-size: 2rem; }
+  .pay-qr-placeholder { width: 160px; height: 160px; }
+  .pay-qr-pattern { width: 112px; height: 112px; gap: 4px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Background Canvas -->
+<canvas class="bg-canvas" id="bgCanvas"></canvas>
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">子午权限</div>
+    <button class="hamburger" id="hamburger" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#hero" class="active">首页</a></li>
+      <li><a href="#services">服务</a></li>
+      <li><a href="#accounts">账号</a></li>
+      <li><a href="#contact">联系</a></li>
+    </ul>
+  </div>
+  <div class="nav-backdrop" id="navBackdrop"></div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-tag">ELITE GAMING ACCOUNT SERVICE</div>
+      <h1>子午权限</h1>
+      <p class="hero-desc">
+        专注高端游戏账号加权与成品交付服务。<br>
+        严选每一件装备资产，为追求极致的玩家提供可靠、高效、安全的账号解决方案。
+      </p>
+      <div class="hero-cta">
+        <a href="#services" class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          查看服务
+        </a>
+        <a href="#accounts" class="btn-ghost">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          浏览账号
+        </a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-ring"></div>
+      <div class="hero-ring"></div>
+      <div class="hero-ring"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="section" id="services">
+  <div class="container">
+    <div class="section-label">SERVICES</div>
+    <h2>服务项目</h2>
+    <p class="section-subtitle">两种灵活方案，满足不同玩家的需求</p>
+    <div class="services-grid">
+      <!-- 自备账号加权 -->
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4a853" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h3>自备账号加权</h3>
+        <p>您提供现有账号，我们进行专业加权处理。适用于已有一定基础、希望提升权限等级的玩家。加权条件详见下方说明图。</p>
+        <div class="service-price">¥8,000</div>
+        <div class="service-note">
+          特殊行为7表现为：强制7天行为异常无1-3封禁缓冲，此代码无法防御。<br>
+          考虑到用户后续失效售后问题：名额不予退款外，按使用剩余时间可进行退款。
+        </div>
+        <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap;">
+          <img src="1780994588259-f495f9cd-0317-4b47-9022-ff506f792bd6.png" alt="加权条件1" style="width:100%; max-width:280px; border-radius:8px; border:1px solid rgba(255,255,255,0.06);">
+          <img src="1781260268419-c4e6c596-f26b-45fd-aca6-b40991a73fc8.png" alt="加权条件2" style="width:100%; max-width:280px; border-radius:8px; border:1px solid rgba(255,255,255,0.06);">
+        </div>
+      </div>
+
+      <!-- 成品账号 -->
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4a853" stroke-width="1.8"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <h3>成品账号</h3>
+        <p>精选高价值成品账号，即买即用。涵盖全红皮肤、稀有刀皮、极品砖皮等顶级配置，每个账号均经过严格核验，确保资产真实有效。</p>
+        <div class="service-price" style="font-size:1.1rem;">15,500 - 18,000 RMB</div>
+        <div class="service-note">
+          所有成品账号均支持 WEGAME 平台登录。<br>
+          提交权类型，交付后即可畅享全部游戏内容。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Accounts -->
+<section class="section" id="accounts">
+  <div class="container">
+    <div class="section-label">ACCOUNTS</div>
+    <h2>成品账号展示</h2>
+    <p class="section-subtitle">每一件都是精心筛选的稀缺资产</p>
+
+    <div class="accounts-grid">
+
+      <!-- Account 1 -->
+      <div class="account-card">
+        <div class="account-badge badge-delivered">已交付</div>
+        <div class="account-gallery">
+          <img src="1780992321685-81e1136a-56c5-4af9-8ef3-63a185339a13.jpeg" alt="" loading="lazy">
+          <img src="1780992345539-53734fd6-51d5-45e7-9daf-d6fbf9644c79.jpeg" alt="" loading="lazy">
+          <img src="1780992340516-59b61534-da7a-4e91-98cb-3c4915361cd6.jpeg" alt="" loading="lazy">
+        </div>
+        <div class="account-body">
+          <div class="account-title">PRO ACCOUNT 01</div>
+          <div class="account-skin">全红差露娜 4条冰龙</div>
+          <div class="account-meta">
+            <div class="meta-item"><div class="meta-label">总资产</div><div class="meta-value">300M</div></div>
+            <div class="meta-item"><div class="meta-label">平台</div><div class="meta-value">WEGAME</div></div>
+            <div class="meta-item"><div class="meta-label">权限类型</div><div class="meta-value">提交权</div></div>
+            <div class="meta-item"><div class="meta-label">状态</div><div class="meta-value" style="color:#66bb6a;">已交付</div></div>
+          </div>
+          <div class="account-footer">
+            <div class="account-price">¥17,000</div>
+            <button class="btn-primary btn-buy" data-name="PRO ACCOUNT 01" data-price="17000">立即购买</button>
+            <div class="account-id">#001</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account 2 -->
+      <div class="account-card">
+        <div class="account-badge badge-delivered">已交付</div>
+        <div class="account-gallery four-col">
+          <img src="1780992633426-6c323d8b-d828-4f23-8018-7295148e7769.jpeg" alt="" loading="lazy">
+          <img src="1780992655222-d0a6ad03-1549-4a66-ad4e-f58bac856521.jpeg" alt="" loading="lazy">
+          <img src="1780992650618-c0f5a45f-ff09-4dce-b160-bcf47a1ce00c.jpeg" alt="" loading="lazy">
+          <img src="1780992640610-784eca99-6bde-4d41-bb86-f808bac74d77.jpeg" alt="" loading="lazy">
+        </div>
+        <div class="account-body">
+          <div class="account-title">PRO ACCOUNT 02</div>
+          <div class="account-skin">全红少露娜 威龙假面</div>
+          <div class="account-meta">
+            <div class="meta-item"><div class="meta-label">总资产</div><div class="meta-value">400M</div></div>
+            <div class="meta-item"><div class="meta-label">平台</div><div class="meta-value">WEGAME</div></div>
+            <div class="meta-item"><div class="meta-label">权限类型</div><div class="meta-value">提交权</div></div>
+            <div class="meta-item"><div class="meta-label">状态</div><div class="meta-value" style="color:#66bb6a;">已交付</div></div>
+          </div>
+          <div class="account-footer">
+            <div class="account-price">¥17,000</div>
+            <button class="btn-primary btn-buy" data-name="PRO ACCOUNT 02" data-price="17000">立即购买</button>
+            <div class="account-id">#002</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account 3 - 5 images -->
+      <div class="account-card">
+        <div class="account-badge badge-delivered">已交付</div>
+        <div class="account-gallery" style="grid-template-columns:repeat(3,1fr);">
+          <img src="1780994982482-eba8d537-d37c-427a-bf81-d3bde8fe90b1.png" alt="" loading="lazy">
+          <img src="1780994977158-ece1c71e-9431-4662-84d2-b01fdafe48cb.png" alt="" loading="lazy">
+          <img src="1780994972242-a24934d7-4b6e-419e-8ca6-7be5f89d4fa1.png" alt="" loading="lazy">
+          <img src="1780994965979-1c2c2527-ccd5-429d-86d1-cd5600fe9f12.png" alt="" loading="lazy">
+          <img src="1780994954802-80df6302-853e-45f5-a5d7-375f3bf954bb.png" alt="" loading="lazy">
+        </div>
+        <div class="account-body">
+          <div class="account-title">PRO ACCOUNT 03</div>
+          <div class="account-skin">红皮：威龙 红狼 麦小雯 露娜劳拉 | 刀皮：北极星 电锯 暗星 坠星者 | 砖皮：kc17极品c M7极品A全粉 腾龙极品B ASVAL优品S KC17优品S SCAR优品B</div>
+          <div class="account-meta">
+            <div class="meta-item"><div class="meta-label">总资产</div><div class="meta-value">270M</div></div>
+            <div class="meta-item"><div class="meta-label">平台</div><div class="meta-value">WEGAME</div></div>
+            <div class="meta-item"><div class="meta-label">权限类型</div><div class="meta-value">提交权</div></div>
+            <div class="meta-item"><div class="meta-label">状态</div><div class="meta-value" style="color:#66bb6a;">已交付</div></div>
+          </div>
+          <div class="account-footer">
+            <div class="account-price">¥16,000</div>
+            <button class="btn-primary btn-buy" data-name="PRO ACCOUNT 03" data-price="16000">立即购买</button>
+            <div class="account-id">#003</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account 4 -->
+      <div class="account-card">
+        <div class="account-badge badge-delivered">已交付</div>
+        <div class="account-gallery">
+          <img src="1781096618143-340e3db9-69aa-4b8e-a8f3-3de096b760e4.jpg" alt="" loading="lazy">
+          <img src="1781096613747-0b14610d-9b87-4d2f-92b9-a5a89f57bbca.jpg" alt="" loading="lazy">
+          <img src="1781096608773-a51c1b87-8613-43b5-a9b0-53f30b86c71b.jpg" alt="" loading="lazy">
+        </div>
+        <div class="account-body">
+          <div class="account-title">PRO ACCOUNT 04</div>
+          <div class="account-skin">全红8刀 差怜悯北极星 吴彦祖 危险物质</div>
+          <div class="account-meta">
+            <div class="meta-item"><div class="meta-label">总资产</div><div class="meta-value">300M</div></div>
+            <div class="meta-item"><div class="meta-label">平台</div><div class="meta-value">WEGAME</div></div>
+            <div class="meta-item"><div class="meta-label">权限类型</div><div class="meta-value">提交权</div></div>
+            <div class="meta-item"><div class="meta-label">状态</div><div class="meta-value" style="color:#66bb6a;">已交付</div></div>
+          </div>
+          <div class="account-footer">
+            <div class="account-price">¥16,500</div>
+            <button class="btn-primary btn-buy" data-name="PRO ACCOUNT 04" data-price="16500">立即购买</button>
+            <div class="account-id">#004</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account 5 - 1 image -->
+      <div class="account-card">
+        <div class="account-badge badge-delivered">已交付</div>
+        <div class="account-gallery single-col">
+          <img src="1781248912995-63f188f7-d149-4dba-9217-70fc09688263.jpg" alt="" loading="lazy">
+        </div>
+        <div class="account-body">
+          <div class="account-title">PRO ACCOUNT 05</div>
+          <div class="account-skin">全红全刀差蝴蝶 满特勤 1.5w券</div>
+          <div class="account-meta">
+            <div class="meta-item"><div class="meta-label">总资产</div><div class="meta-value">330M</div></div>
+            <div class="meta-item"><div class="meta-label">平台</div><div class="meta-value">WEGAME</div></div>
+            <div class="meta-item"><div class="meta-label">权限类型</div><div class="meta-value">提交权</div></div>
+            <div class="meta-item"><div class="meta-label">状态</div><div class="meta-value" style="color:#66bb6a;">已交付</div></div>
+          </div>
+          <div class="account-footer">
+            <div class="account-price">¥15,500</div>
+            <button class="btn-primary btn-buy" data-name="PRO ACCOUNT 05" data-price="15500">立即购买</button>
+            <div class="account-id">#005</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account 6 -->
+      <div class="account-card">
+        <div class="account-badge badge-pending">未交付</div>
+        <div class="account-gallery">
+          <img src="9AC6C6ECA4378B863E4D54C51CCB1347.jpg" alt="国服击杀标" loading="lazy">
+          <img src="B52B176C4ED28317B117B6FAFD577862.jpg" alt="国服击杀标" loading="lazy">
+          <img src="23319.jpg" alt="国服击杀标" loading="lazy">
+        </div>
+        <div class="account-body">
+          <div class="account-title">PRO ACCOUNT 06</div>
+          <div class="account-skin">国服击杀标皮肤内容看图</div>
+          <div class="account-meta">
+            <div class="meta-item"><div class="meta-label">总资产</div><div class="meta-value">200M</div></div>
+            <div class="meta-item"><div class="meta-label">平台</div><div class="meta-value">WEGAME</div></div>
+            <div class="meta-item"><div class="meta-label">权限类型</div><div class="meta-value">提交权</div></div>
+            <div class="meta-item"><div class="meta-label">状态</div><div class="meta-value" style="color:#ffa726;">未交付</div></div>
+          </div>
+          <div class="account-footer">
+            <div class="account-price">¥18,000</div>
+            <button class="btn-primary btn-buy" data-name="PRO ACCOUNT 06" data-price="18000">立即购买</button>
+            <div class="account-id">#006</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account 7 -->
+      <div class="account-card">
+        <div class="account-badge badge-pending">未交付</div>
+        <div class="account-gallery">
+          <img src="F644CD3A04EF4D3C427325766A0960A6.jpg" alt="" loading="lazy">
+          <img src="D58FFD36B55FBB41832C3439993011B0.jpg" alt="" loading="lazy">
+          <img src="FBB917B3951A5ED6BFECC9159672805D.jpg" alt="" loading="lazy">
+          <img src="764F0A7B99CF87C3C6CECF1102068996.jpg" alt="" loading="lazy">
+          <img src="7CD81D015B9DBBEB4244F63FD9CF7FE3.jpg" alt="" loading="lazy">
+          <img src="74BA1F2E478BDECACC3664702D5322F7.jpg" alt="" loading="lazy">
+        </div>
+        <div class="account-body">
+          <div class="account-title">PRO ACCOUNT 07</div>
+          <div class="account-skin">2w多点卷 全红 4刀 砖皮五把</div>
+          <div class="account-meta">
+            <div class="meta-item"><div class="meta-label">总资产</div><div class="meta-value">6400W</div></div>
+            <div class="meta-item"><div class="meta-label">平台</div><div class="meta-value">WEGAME</div></div>
+            <div class="meta-item"><div class="meta-label">权限类型</div><div class="meta-value">提交权</div></div>
+            <div class="meta-item"><div class="meta-label">状态</div><div class="meta-value" style="color:#ffa726;">未交付</div></div>
+          </div>
+          <div class="account-footer">
+            <div class="account-price">¥17,000</div>
+            <button class="btn-primary btn-buy" data-name="PRO ACCOUNT 07" data-price="17000">立即购买</button>
+            <div class="account-id">#007</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="contact-card">
+      <div class="section-label">CONTACT</div>
+      <h2>获取您的专属账号</h2>
+      <p style="color:#888; font-size:0.95rem; margin-bottom:8px;">添加微信，专业顾问一对一服务</p>
+      <div class="contact-wechat">
+        <span class="wechat-icon">
+          <svg viewBox="0 0 24 24"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 01.213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 00.167-.054l1.903-1.114a.864.864 0 01.717-.098 10.16 10.16 0 002.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 01-1.162 1.178A1.17 1.17 0 014.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 01-1.162 1.178 1.17 1.17 0 01-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 01.598.082l1.584.926a.272.272 0 00.14.045c.134 0 .24-.11.24-.245 0-.06-.024-.12-.04-.178l-.325-1.233a.492.492 0 01.178-.553C23.028 18.48 24 16.82 24 14.98c0-3.21-2.931-5.952-7.062-6.122zm-2.18 2.769c.535 0 .969.44.969.982a.976.976 0 01-.969.983.976.976 0 01-.969-.983c0-.542.434-.982.97-.982zm4.36 0c.535 0 .969.44.969.982a.976.976 0 01-.969.983.976.976 0 01-.969-.983c0-.542.434-.982.97-.982z"/></svg>
+        </span>
+        OiNThesky0
+      </div>
+      <p style="color:#555; font-size:0.78rem; margin-top:16px;">添加好友时请备注「子午权限」以获得快速通过</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2026 子午权限. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-backdrop"></div>
+  <div class="lightbox-content">
+    <button class="lightbox-close" id="lightboxClose" aria-label="关闭">&times;</button>
+    <div class="lightbox-image-wrap">
+      <img src="" alt="" id="lightboxImg">
+    </div>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="上一张">&lsaquo;</button>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="下一张">&rsaquo;</button>
+    <div class="lightbox-counter" id="lightboxCounter"></div>
+  </div>
+</div>
+
+<!-- Payment Modal -->
+<div class="pay-modal-overlay" id="payModalOverlay">
+  <div class="pay-modal">
+    <div class="pay-modal-content">
+      <button class="pay-modal-close" id="payModalClose" aria-label="关闭">&times;</button>
+      <div class="pay-modal-header">
+        <div class="pay-modal-product" id="payProductName"></div>
+        <div class="pay-modal-price" id="payProductPrice"></div>
+      </div>
+      <div class="pay-tabs">
+        <button class="pay-tab active" data-pay="wechat">微信支付</button>
+        <button class="pay-tab" data-pay="alipay">支付宝</button>
+      </div>
+      <div class="pay-qr-section" id="payWechat">
+        <div class="pay-qr-placeholder">
+          <div class="pay-qr-pattern">
+            <div class="pay-qr-dot"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot"></div>
+            <div class="pay-qr-dot"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot"></div>
+            <div class="pay-qr-dot"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot"></div>
+            <div class="pay-qr-dot"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot"></div>
+            <div class="pay-qr-dot"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot"></div>
+            <div class="pay-qr-dot"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot"></div>
+            <div class="pay-qr-dot"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot"></div>
+          </div>
+        </div>
+        <p class="pay-qr-hint">请使用微信扫描二维码支付</p>
+      </div>
+      <div class="pay-qr-section" id="payAlipay" style="display:none;">
+        <div class="pay-qr-placeholder">
+          <div class="pay-qr-pattern">
+            <div class="pay-qr-dot"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot"></div>
+            <div class="pay-qr-dot"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot"></div>
+            <div class="pay-qr-dot"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot"></div>
+            <div class="pay-qr-dot"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot"></div>
+            <div class="pay-qr-dot"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot"></div>
+            <div class="pay-qr-dot"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot empty"></div><div class="pay-qr-dot"></div>
+            <div class="pay-qr-dot"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot"></div><div class="pay-qr-dot"></div>
+          </div>
+        </div>
+        <p class="pay-qr-hint">请使用支付宝扫描二维码支付</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SCRIPTS ===== -->
+<script>
+// Background canvas
+(function() {
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  let w, h;
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Particle / line network
+  const particles = [];
+  const count = Math.min(60, Math.floor(w * h / 15000));
+
+  for (let i = 0; i < count; i++) {
+    particles.push({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      r: Math.random() * 1.2 + 0.3,
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, w, h);
+
+    // Update & draw
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0) p.x = w;
+      if (p.x > w) p.x = 0;
+      if (p.y < 0) p.y = h;
+      if (p.y > h) p.y = 0;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(212,168,83,0.15)';
+      ctx.fill();
+    });
+
+    // Draw connections
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 140) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(212,168,83,${0.04 * (1 - dist / 140)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+// Nav scroll effect
+(function() {
+  const nav = document.getElementById('nav');
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    // Scrolled class
+    if (window.scrollY > 60) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+
+    // Active link
+    let current = '';
+    sections.forEach(s => {
+      const top = s.offsetTop - 120;
+      if (window.scrollY >= top) current = s.getAttribute('id');
+    });
+    navLinks.forEach(a => {
+      a.classList.remove('active');
+      if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+    });
+  });
+})();
+
+// Hamburger menu
+(function() {
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  const backdrop = document.getElementById('navBackdrop');
+  const linkItems = navLinks.querySelectorAll('a');
+
+  function open() {
+    hamburger.classList.add('active');
+    navLinks.classList.add('open');
+    backdrop.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function close() {
+    hamburger.classList.remove('active');
+    navLinks.classList.remove('open');
+    backdrop.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  hamburger.addEventListener('click', () => {
+    if (navLinks.classList.contains('open')) close();
+    else open();
+  });
+
+  backdrop.addEventListener('click', close);
+
+  linkItems.forEach(link => {
+    link.addEventListener('click', () => close());
+  });
+})();
+
+// Lightbox
+(function() {
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightboxImg');
+  const lbCounter = document.getElementById('lightboxCounter');
+  const btnClose = document.getElementById('lightboxClose');
+  const btnPrev = document.getElementById('lightboxPrev');
+  const btnNext = document.getElementById('lightboxNext');
+  const backdrop = lightbox.querySelector('.lightbox-backdrop');
+
+  let currentGroup = [];   // images in current account card
+  let currentIndex = 0;
+
+  // Collect all account-card galleries, build groups
+  const cards = document.querySelectorAll('.account-card');
+  const groups = [];
+
+  cards.forEach(card => {
+    const imgs = card.querySelectorAll('.account-gallery img');
+    if (imgs.length > 0) {
+      const urls = [];
+      imgs.forEach(img => { urls.push(img.src); });
+      groups.push({ card: card, urls: urls, elements: Array.from(imgs) });
+    }
+  });
+
+  // Attach click listeners
+  groups.forEach((group, gi) => {
+    group.elements.forEach((img, ii) => {
+      img.style.cursor = 'pointer';
+      img.addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentGroup = group.urls;
+        currentIndex = ii;
+        show(currentIndex);
+      });
+    });
+  });
+
+  function show(index) {
+    lbImg.src = currentGroup[index];
+    updateCounter(index);
+    updateNavVisibility();
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function updateCounter(index) {
+    if (currentGroup.length > 1) {
+      lbCounter.innerHTML = '<span>' + (index + 1) + '</span> / ' + currentGroup.length;
+      lbCounter.style.display = 'block';
+    } else {
+      lbCounter.style.display = 'none';
+    }
+  }
+
+  function updateNavVisibility() {
+    if (currentGroup.length <= 1) {
+      btnPrev.style.display = 'none';
+      btnNext.style.display = 'none';
+    } else {
+      btnPrev.style.display = 'flex';
+      btnNext.style.display = 'flex';
+    }
+  }
+
+  function prev() {
+    currentIndex = (currentIndex - 1 + currentGroup.length) % currentGroup.length;
+    lbImg.src = currentGroup[currentIndex];
+    updateCounter(currentIndex);
+  }
+
+  function next() {
+    currentIndex = (currentIndex + 1) % currentGroup.length;
+    lbImg.src = currentGroup[currentIndex];
+    updateCounter(currentIndex);
+  }
+
+  // Event listeners
+  btnClose.addEventListener('click', close);
+  backdrop.addEventListener('click', close);
+  btnPrev.addEventListener('click', (e) => { e.stopPropagation(); prev(); });
+  btnNext.addEventListener('click', (e) => { e.stopPropagation(); next(); });
+
+  // Keyboard
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('active')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') prev();
+    if (e.key === 'ArrowRight') next();
+  });
+
+  // Prevent lightbox content click from closing
+  lightbox.querySelector('.lightbox-content').addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+})();
+
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// Payment modal
+(function() {
+  var overlay = document.getElementById('payModalOverlay');
+  var closeBtn = document.getElementById('payModalClose');
+  var productName = document.getElementById('payProductName');
+  var productPrice = document.getElementById('payProductPrice');
+  var tabs = document.querySelectorAll('.pay-tab');
+  var wechatSection = document.getElementById('payWechat');
+  var alipaySection = document.getElementById('payAlipay');
+
+  // Tab switch
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      tabs.forEach(function(t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+      var pay = tab.getAttribute('data-pay');
+      wechatSection.style.display = pay === 'wechat' ? 'block' : 'none';
+      alipaySection.style.display = pay === 'alipay' ? 'block' : 'none';
+    });
+  });
+
+  // Buy button click
+  document.querySelectorAll('.btn-buy').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      productName.textContent = btn.getAttribute('data-name');
+      productPrice.textContent = '\u00a5' + Number(btn.getAttribute('data-price')).toLocaleString();
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  // Close
+  function closeModal() {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('active')) closeModal();
+  });
+})();
+</script>
+
+</body>
+</html>
