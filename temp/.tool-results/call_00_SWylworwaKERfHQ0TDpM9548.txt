@@ -1,0 +1,204 @@
+C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:204:}
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:205:/* Status badge */
+> C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:206:.account-badge {
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:207:  position: absolute; top: 16px; right: 16px; z-index: 2;
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:208:  padding: 5px 14px; border-radius: 100px; font-size: 0.72rem; font-weight: 600;
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:209:  letter-spacing: 0.04em;
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:210:}
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:211:.badge-delivered {
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:620:      <!-- Account 1 -->
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:621:      <div class="account-card">
+> C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:622:        <div class="account-badge badge-delivered">已交付</div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:623:        <div class="account-gallery">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:624:          <img src="1780992321685-81e1136a-56c5-4af9-8ef3-63a185339a13.jpeg" alt="" lo
+ading="lazy">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:625:          <img src="1780992345539-53734fd6-51d5-45e7-9daf-d6fbf9644c79.jpeg" alt="" lo
+ading="lazy">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:626:          <img src="1780992340516-59b61534-da7a-4e91-98cb-3c4915361cd6.jpeg" alt="" lo
+ading="lazy">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:627:        </div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:644:      <!-- Account 2 -->
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:645:      <div class="account-card">
+> C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:646:        <div class="account-badge badge-delivered">已交付</div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:647:        <div class="account-gallery four-col">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:648:          <img src="1780992633426-6c323d8b-d828-4f23-8018-7295148e7769.jpeg" alt="" lo
+ading="lazy">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:649:          <img src="1780992655222-d0a6ad03-1549-4a66-ad4e-f58bac856521.jpeg" alt="" lo
+ading="lazy">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:650:          <img src="1780992650618-c0f5a45f-ff09-4dce-b160-bcf47a1ce00c.jpeg" alt="" lo
+ading="lazy">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:651:          <img src="1780992640610-784eca99-6bde-4d41-bb86-f808bac74d77.jpeg" alt="" lo
+ading="lazy">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:669:      <!-- Account 3 - 5 images -->
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:670:      <div class="account-card">
+> C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:671:        <div class="account-badge badge-delivered">已交付</div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:672:        <div class="account-gallery" style="grid-template-columns:repeat(3,1fr);">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:673:          <img src="1780994982482-eba8d537-d37c-427a-bf81-d3bde8fe90b1.png" alt="" loa
+ding="lazy">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:674:          <img src="1780994977158-ece1c71e-9431-4662-84d2-b01fdafe48cb.png" alt="" loa
+ding="lazy">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:675:          <img src="1780994972242-a24934d7-4b6e-419e-8ca6-7be5f89d4fa1.png" alt="" loa
+ding="lazy">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:676:          <img src="1780994965979-1c2c2527-ccd5-429d-86d1-cd5600fe9f12.png" alt="" loa
+ding="lazy">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:693:      </div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:694:
+> C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:695:      <!-- Account 4 - 9 images -->
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:696:      <div class="account-card">
+> C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:697:        <div class="account-badge badge-pending">未交付</div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:698:        <div class="account-gallery">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:699:          <img src="1781096618143-340e3db9-69aa-4b8e-a8f3-3de096b760e4.jpg" alt="" loa
+ding="lazy">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:700:          <img src="1781096613747-0b14610d-9b87-4d2f-92b9-a5a89f57bbca.jpg" alt="" loa
+ding="lazy">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:701:          <img src="1781096608773-a51c1b87-8613-43b5-a9b0-53f30b86c71b.jpg" alt="" loa
+ding="lazy">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:702:        </div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:708:            <div class="meta-item"><div class="meta-label">平台</div><div class="meta-va
+lue">WEGAME</div></div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:709:            <div class="meta-item"><div class="meta-label">权限类型</div><div class="meta-
+value">提交权</div></div>
+> C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:710:            <div class="meta-item"><div class="meta-label">状态</div><div class="meta-va
+lue" style="color:#ffa726;">未交付</div></div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:711:          </div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:712:          <div class="account-footer">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:713:            <div class="account-price">¥16,500</div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:714:            <div class="account-id">#004</div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:715:          </div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:719:      <!-- Account 5 - 1 image -->
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:720:      <div class="account-card">
+> C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:721:        <div class="account-badge badge-delivered">已交付</div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:722:        <div class="account-gallery single-col">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:723:          <img src="1781248912995-63f188f7-d149-4dba-9217-70fc09688263.jpg" alt="" loa
+ding="lazy">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:724:        </div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:725:        <div class="account-body">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:726:          <div class="account-title">PRO ACCOUNT 05</div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:741:      <!-- Account 6 -->
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:742:      <div class="account-card">
+> C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:743:        <div class="account-badge badge-pending">未交付</div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:744:        <div class="account-gallery">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:745:          <img src="9AC6C6ECA4378B863E4D54C51CCB1347.jpg" alt="国服击杀标" loading="lazy">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:746:          <img src="B52B176C4ED28317B117B6FAFD577862.jpg" alt="国服击杀标" loading="lazy">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:747:          <img src="23319.jpg" alt="国服击杀标" loading="lazy">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:748:        </div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:754:            <div class="meta-item"><div class="meta-label">平台</div><div class="meta-va
+lue">WEGAME</div></div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:755:            <div class="meta-item"><div class="meta-label">权限类型</div><div class="meta-
+value">提交权</div></div>
+> C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:756:            <div class="meta-item"><div class="meta-label">状态</div><div class="meta-va
+lue" style="color:#ffa726;">未交付</div></div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:757:          </div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:758:          <div class="account-footer">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:759:            <div class="account-price">¥18,000</div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:760:            <div class="account-id">#006</div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:761:          </div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:765:      <!-- Account 7 -->
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:766:      <div class="account-card">
+> C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:767:        <div class="account-badge badge-pending">未交付</div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:768:        <div class="account-gallery">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:769:          <img src="F644CD3A04EF4D3C427325766A0960A6.jpg" alt="" loading="lazy">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:770:          <img src="D58FFD36B55FBB41832C3439993011B0.jpg" alt="" loading="lazy">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:771:          <img src="FBB917B3951A5ED6BFECC9159672805D.jpg" alt="" loading="lazy">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:772:          <img src="764F0A7B99CF87C3C6CECF1102068996.jpg" alt="" loading="lazy">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:781:            <div class="meta-item"><div class="meta-label">平台</div><div class="meta-va
+lue">WEGAME</div></div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:782:            <div class="meta-item"><div class="meta-label">权限类型</div><div class="meta-
+value">提交权</div></div>
+> C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:783:            <div class="meta-item"><div class="meta-label">状态</div><div class="meta-va
+lue" style="color:#ffa726;">未交付</div></div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:784:          </div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:785:          <div class="account-footer">
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:786:            <div class="account-price">¥17,000</div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:787:            <div class="account-id">#007</div>
+  C:\Users\Administrator\AppData\Roaming\Tencent\Marvis\User\oAN1i2TIPZU4jdXjuXy26Kkhaw-k\workspace\conv_19ec034636f_cd
+a3115e48bb\output\index.html:788:          </div>
