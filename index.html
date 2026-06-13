@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>子午权限 - 精英游戏账号服务</title>
+<link rel="icon" type="image/png" href="logo.png">
 <style>
 /* ===== RESET & BASE ===== */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -54,6 +55,9 @@ body {
   background: linear-gradient(135deg, #d4a853 0%, #e8c97a 30%, #bf953f 60%, #f6d365 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+.nav-logo-img {
+  height: 36px; width: auto; display: block;
 }
 .nav-links { display: flex; gap: 36px; list-style: none; }
 .nav-links a {
@@ -256,9 +260,13 @@ body {
 .meta-label { font-size: 0.7rem; color: #666; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
 .meta-value { font-size: 0.88rem; color: #ddd; font-weight: 500; }
 .account-footer {
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
   padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.04);
   margin-top: auto;
+  flex-shrink: 0;
+}
+.account-footer-right {
+  display: flex; align-items: center; gap: 10px;
   flex-shrink: 0;
 }
 .account-price {
@@ -426,6 +434,7 @@ body {
   .meta-label { font-size: 0.65rem; }
   .meta-value { font-size: 0.8rem; }
   .account-price { font-size: 1.2rem; }
+  .btn-buy { width: auto !important; padding: 6px 14px; font-size: 0.75rem; }
 
   .contact-section { padding: 56px 0 40px; }
   .contact-card { padding: 32px 18px; margin: 0 8px; border-radius: 18px; }
@@ -740,8 +749,10 @@ body {
           </div>
           <div class="account-footer">
             <div class="account-price">¥17,000</div>
-            <button class="btn-primary btn-buy" data-name="PRO ACCOUNT 01" data-price="17000">立即购买</button>
-            <div class="account-id">#001</div>
+            <div class="account-footer-right">
+              <button class="btn-primary btn-buy" data-name="PRO ACCOUNT 01" data-price="17000">立即购买</button>
+              <div class="account-id">#001</div>
+            </div>
           </div>
         </div>
       </div>
@@ -793,8 +804,10 @@ body {
           </div>
           <div class="account-footer">
             <div class="account-price">¥16,000</div>
-            <button class="btn-primary btn-buy" data-name="PRO ACCOUNT 03" data-price="16000">立即购买</button>
-            <div class="account-id">#003</div>
+            <div class="account-footer-right">
+              <button class="btn-primary btn-buy" data-name="PRO ACCOUNT 03" data-price="16000">立即购买</button>
+              <div class="account-id">#003</div>
+            </div>
           </div>
         </div>
       </div>
@@ -818,8 +831,10 @@ body {
           </div>
           <div class="account-footer">
             <div class="account-price">¥16,500</div>
-            <button class="btn-primary btn-buy" data-name="PRO ACCOUNT 04" data-price="16500">立即购买</button>
-            <div class="account-id">#004</div>
+            <div class="account-footer-right">
+              <button class="btn-primary btn-buy" data-name="PRO ACCOUNT 04" data-price="16500">立即购买</button>
+              <div class="account-id">#004</div>
+            </div>
           </div>
         </div>
       </div>
@@ -841,8 +856,10 @@ body {
           </div>
           <div class="account-footer">
             <div class="account-price">¥15,500</div>
-            <button class="btn-primary btn-buy" data-name="PRO ACCOUNT 05" data-price="15500">立即购买</button>
-            <div class="account-id">#005</div>
+            <div class="account-footer-right">
+              <button class="btn-primary btn-buy" data-name="PRO ACCOUNT 05" data-price="15500">立即购买</button>
+              <div class="account-id">#005</div>
+            </div>
           </div>
         </div>
       </div>
@@ -866,8 +883,10 @@ body {
           </div>
           <div class="account-footer">
             <div class="account-price">¥18,000</div>
-            <button class="btn-primary btn-buy" data-name="PRO ACCOUNT 06" data-price="18000">立即购买</button>
-            <div class="account-id">#006</div>
+            <div class="account-footer-right">
+              <button class="btn-primary btn-buy" data-name="PRO ACCOUNT 06" data-price="18000">立即购买</button>
+              <div class="account-id">#006</div>
+            </div>
           </div>
         </div>
       </div>
@@ -894,8 +913,10 @@ body {
           </div>
           <div class="account-footer">
             <div class="account-price">¥17,000</div>
-            <button class="btn-primary btn-buy" data-name="PRO ACCOUNT 07" data-price="17000">立即购买</button>
-            <div class="account-id">#007</div>
+            <div class="account-footer-right">
+              <button class="btn-primary btn-buy" data-name="PRO ACCOUNT 07" data-price="17000">立即购买</button>
+              <div class="account-id">#007</div>
+            </div>
           </div>
         </div>
       </div>
