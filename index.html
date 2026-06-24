@@ -1364,6 +1364,14 @@ body {
     }
   });
 
+  // Collect service area images with data-full as a standalone group
+  var serviceImgs = document.querySelectorAll('.service-card img[data-full]');
+  if (serviceImgs.length > 0) {
+    var urls = [];
+    serviceImgs.forEach(function(img) { urls.push(resolveUrl(img)); });
+    groups.push({ card: null, urls: urls, elements: Array.from(serviceImgs) });
+  }
+
   // Attach click listeners
   groups.forEach(function(group) {
     group.elements.forEach(function(img, ii) {
