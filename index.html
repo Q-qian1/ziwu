@@ -607,6 +607,18 @@ body {
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+.pay-review {
+  margin: 16px 0 20px; padding: 14px 16px;
+  background: rgba(255,167,38,0.06); border-left: 2px solid #ffa726;
+  border-radius: 0 8px 8px 0;
+}
+.pay-review-title {
+  font-size: 0.78rem; font-weight: 700; color: #ffa726;
+  margin-bottom: 8px; letter-spacing: 0.04em;
+}
+.pay-review-item {
+  font-size: 0.74rem; color: #aaa; line-height: 1.7;
+}
 .pay-tabs {
   display: flex; gap: 0; margin-bottom: 28px;
   background: rgba(255,255,255,0.025); border-radius: 10px;
@@ -1225,6 +1237,12 @@ body {
       <div class="pay-modal-header">
         <div class="pay-modal-product" id="payProductName"></div>
         <div class="pay-modal-price" id="payProductPrice"></div>
+      </div>
+      <div class="pay-review">
+        <div class="pay-review-title">审核要求</div>
+        <div class="pay-review-item">1: 常用IP/MAC</div>
+        <div class="pay-review-item">2: 持有身份证件拍摄电脑设备插口及使用环境</div>
+        <div class="pay-review-item">3: 个人VX账号昵称</div>
       </div>
       <div class="pay-tabs">
         <button class="pay-tab active" data-pay="wechat">微信支付</button>
