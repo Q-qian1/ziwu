@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>子午权限 - 管理后台</title>
+<style>
+:root {
+  --bg: #08080d;
+  --card: #111118;
+  --card-hover: #161620;
+  --border: #1e1e2a;
+  --text: #e0e0e0;
+  --text-secondary: #888;
+  --green: #66bb6a;
+  --orange: #ffa726;
+  --blue: #5c9ce6;
+  --pink: #e06090;
+  --cyan: #4ec9b0;
+  --red: #e05555;
+  --accent: #5c9ce6;
+  --radius: 14px;
+  --shadow: 0 2px 16px rgba(0,0,0,0.3);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+body.light {
+  --bg: #f5f5f7;
+  --card: #ffffff;
+  --card-hover: #fafafa;
+  --border: #e5e5ea;
+  --text: #1d1d1f;
+  --text-secondary: #86868b;
+  --shadow: 0 2px 16px rgba(0,0,0,0.06);
+}
+
+/* Header */
+.header {
+  position: sticky; top:0; z-index:100;
+  background: rgba(8,8,13,0.85);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.light .header { background: rgba(245,245,247,0.85); }
+.header-left { display:flex; align-items:center; gap:16px; }
+.header-logo { font-size:1.1rem; font-weight:700; letter-spacing: -0.3px; }
+.header-actions { display:flex; align-items:center; gap:10px; }
+.btn {
+  padding: 8px 18px; border-radius: 8px; border: none; cursor: pointer;
+  font-size: 0.85rem; font-weight: 500; font-family: inherit;
+  transition: all 0.2s;
+}
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { filter: brightness(1.15); }
+.btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+.btn-outline:hover { background: var(--card-hover); }
+.btn-danger { background: transparent; border: 1px solid var(--red); color: var(--red); }
+.btn-danger:hover { background: rgba(224,85,85,0.1); }
+.btn-sm { padding: 5px 12px; font-size: 0.78rem; }
+.btn-icon { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; display:flex; align-items:center; justify-content:center; font-size: 1rem; transition: all 0.2s; }
+.btn-icon:hover { background: var(--card-hover); }
+
+/* Container */
+.container { max-width: 1400px; margin: 0 auto; padding: 24px 32px; }
+
+/* Stats */
+.stats-grid { display:grid; grid-template-columns: repeat(4,1fr); gap:16px; margin-bottom:24px; }
+.stat-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px 24px;
+  transition: all 0.2s;
+}
+.stat-card:hover { background: var(--card-hover); box-shadow: var(--shadow); }
+.stat-label { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 6px; }
+.stat-value { font-size: 1.8rem; font-weight: 700; letter-spacing: -0.5px; }
+.stat-sub { font-size: 0.75rem; color: var(--text-secondary); margin-top:4px; }
+
+/* Toolbar */
+.toolbar {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom: 16px; gap: 12px; flex-wrap: wrap;
+}
+.search-box {
+  display:flex; align-items:center; gap:8px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 8px 14px; flex:1; max-width: 360px;
+}
+.search-box input {
+  background: transparent; border: none; outline: none; color: var(--text);
+  font-size: 0.88rem; width: 100%; font-family: inherit;
+}
+.search-box input::placeholder { color: var(--text-secondary); }
+.filter-group { display:flex; gap:6px; }
+.filter-chip {
+  padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border);
+  background: transparent; color: var(--text-secondary); cursor: pointer;
+  font-size: 0.8rem; font-family: inherit; transition: all 0.2s;
+}
+.filter-chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.filter-chip:hover:not(.active) { color: var(--text); border-color: #444; }
+
+/* Table */
+.table-wrap {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+}
+table {
+  width: 100%; border-collapse: collapse;
+}
+th {
+  text-align: left; padding: 14px 18px; font-size: 0.78rem;
+  font-weight: 600; color: var(--text-secondary);
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,0.02); letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+td {
+  padding: 12px 18px; border-bottom: 1px solid var(--border);
+  font-size: 0.85rem; vertical-align: middle;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(255,255,255,0.02); }
+.light tr:hover td { background: rgba(0,0,0,0.02); }
+
+.status-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 500;
+  cursor: pointer; transition: all 0.2s; user-select: none;
+}
+.status-badge.delivered { background: rgba(102,187,106,0.15); color: var(--green); border: 1px solid rgba(102,187,106,0.3); }
+.status-badge.pending { background: rgba(255,167,38,0.15); color: var(--orange); border: 1px solid rgba(255,167,38,0.3); }
+.status-badge:hover { filter: brightness(1.2); }
+
+.action-btn {
+  padding: 4px 8px; border-radius: 6px; border: none; cursor: pointer;
+  background: transparent; color: var(--text-secondary); font-size: 0.82rem;
+  transition: all 0.15s; font-family: inherit;
+}
+.action-btn:hover { background: var(--border); color: var(--text); }
+.action-btn.edit-btn:hover { color: var(--blue); }
+.action-btn.del-btn:hover { color: var(--red); }
+
+/* Modal */
+.modal-overlay {
+  position: fixed; inset:0; z-index:1000;
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; pointer-events:none; transition: opacity 0.25s;
+}
+.modal-overlay.active { opacity:1; pointer-events:auto; }
+.modal {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 28px; width: 90%; max-width: 560px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5); max-height: 85vh; overflow-y: auto;
+}
+.modal h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 20px; }
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 6px; font-weight: 500; }
+.form-group input, .form-group textarea, .form-group select {
+  width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--bg); color: var(--text); font-size: 0.88rem; font-family: inherit;
+  transition: border-color 0.2s; resize: vertical;
+}
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+  outline: none; border-color: var(--accent);
+}
+.form-row { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+.modal-actions { display:flex; justify-content:flex-end; gap:10px; margin-top: 20px; }
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%);
+  background: var(--card); border: 1px solid var(--border);
+  padding: 12px 24px; border-radius: 10px; font-size: 0.85rem;
+  box-shadow: var(--shadow); z-index:2000;
+  opacity:0; pointer-events:none; transition: opacity 0.3s;
+}
+.toast.show { opacity:1; }
+
+/* Export */
+.export-area {
+  margin-top: 24px; 
+}
+.export-area textarea {
+  width: 100%; height: 120px; background: var(--bg); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px; color: var(--text); font-size: 0.78rem;
+  font-family: "SF Mono", "Cascadia Code", "Consolas", monospace; resize: vertical; display:none;
+}
+.export-area textarea.visible { display:block; }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .stats-grid { grid-template-columns: repeat(2,1fr); }
+  .container { padding: 16px; }
+  .header { padding: 12px 16px; }
+  .form-row { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  .toolbar { flex-direction: column; align-items: stretch; }
+  .search-box { max-width: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <span class="header-logo">子午权限</span>
+    <span style="color:var(--text-secondary);font-size:0.8rem;">管理后台</span>
+  </div>
+  <div class="header-actions">
+    <button class="btn-icon" onclick="toggleTheme()" title="切换主题">☀</button>
+    <a href="index.html" class="btn btn-outline btn-sm" style="text-decoration:none;">← 返回前台</a>
+  </div>
+</div>
+
+<div class="container">
+  <!-- Stats -->
+  <div class="stats-grid" id="statsGrid"></div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <div class="search-box">
+      <span style="color:var(--text-secondary);font-size:0.85rem;">🔍</span>
+      <input type="text" id="searchInput" placeholder="搜索账号名称、皮肤..." oninput="renderTable()">
+    </div>
+    <div class="filter-group">
+      <button class="filter-chip active" data-filter="all" onclick="setFilter('all',this)">全部</button>
+      <button class="filter-chip" data-filter="delivered" onclick="setFilter('delivered',this)">已交付</button>
+      <button class="filter-chip" data-filter="pending" onclick="setFilter('pending',this)">未交付</button>
+    </div>
+    <button class="btn btn-primary btn-sm" onclick="openModal()">+ 新增账号</button>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrap" style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>编号</th>
+          <th>名称 / 皮肤</th>
+          <th>总资产</th>
+          <th>平台</th>
+          <th>权限</th>
+          <th>状态</th>
+          <th>价格</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+
+  <!-- Export -->
+  <div class="export-area" style="margin-top:20px; display:flex; gap:10px; align-items:flex-start; flex-wrap:wrap;">
+    <button class="btn btn-outline btn-sm" onclick="toggleExport()">📋 导出 JSON</button>
+    <button class="btn btn-outline btn-sm" onclick="exportCSV()">📊 导出 CSV</button>
+    <textarea id="exportText" readonly></textarea>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3 id="modalTitle">新增账号</h3>
+    <form id="accountForm" onsubmit="saveAccount(event)">
+      <input type="hidden" id="editId">
+      <div class="form-group">
+        <label>皮肤/描述</label>
+        <textarea id="skin" rows="2" placeholder="例如：全红差露娜 4条冰龙"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>总资产</label>
+          <input type="text" id="assets" placeholder="例如：300M">
+        </div>
+        <div class="form-group">
+          <label>价格（数字）</label>
+          <input type="number" id="dataPrice" placeholder="例如：17000">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>平台</label>
+          <select id="platform">
+            <option value="WEGAME">WEGAME</option>
+            <option value="Steam">Steam</option>
+            <option value="Epic">Epic</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>权限类型</label>
+          <select id="permission">
+            <option value="提交权">提交权</option>
+            <option value="拥有权">拥有权</option>
+            <option value="共享权">共享权</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>状态</label>
+        <select id="status">
+          <option value="pending">未交付</option>
+          <option value="delivered">已交付</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" onclick="closeModal()">取消</button>
+        <button type="submit" class="btn btn-primary">保存</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ========== Data ==========
+const defaultAccounts = [
+  {id:1, skin:"全红差露娜 4条冰龙", assets:"300M", platform:"WEGAME", permission:"提交权", status:"delivered", dataPrice:17000},
+  {id:2, skin:"全红少露娜 威龙假面", assets:"400M", platform:"WEGAME", permission:"提交权", status:"delivered", dataPrice:17000},
+  {id:3, skin:"红皮：威龙 红狼 麦小雯 露娜劳拉 | 刀皮：北极星 电锯 暗星 坠星者 | 砖皮：kc17极品c M7极品A全粉 腾龙极品B ASVAL优品S KC17优品S SCAR优品B", assets:"270M", platform:"WEGAME", permission:"提交权", status:"delivered", dataPrice:16000},
+  {id:4, skin:"全红8刀 差怜悯北极星 吴彦祖 危险物质", assets:"300M", platform:"WEGAME", permission:"提交权", status:"delivered", dataPrice:16500},
+  {id:5, skin:"全红全刀差蝴蝶 满特勤 1.5w券", assets:"330M", platform:"WEGAME", permission:"提交权", status:"delivered", dataPrice:15500},
+  {id:6, skin:"国服击杀标皮肤内容看图", assets:"200M", platform:"WEGAME", permission:"提交权", status:"pending", dataPrice:18000},
+  {id:7, skin:"2w多点卷 全红 4刀 砖皮五把", assets:"6400W", platform:"WEGAME", permission:"提交权", status:"delivered", dataPrice:17000},
+  {id:8, skin:"凌霄-玫瑰-水墨 200M  M7砖S - MP7砖  8000卷 超核玩家", assets:"200M", platform:"WEGAME", permission:"提交权", status:"delivered", dataPrice:15000},
+  {id:9, skin:"红皮差个蛊 满特勤", assets:"665M", platform:"WEGAME", permission:"提交权", status:"delivered", dataPrice:17000},
+  {id:10, skin:"极品M7钻石  1.9w卷  满特勤", assets:"113M", platform:"WEGAME", permission:"提交权", status:"pending", dataPrice:55000},
+  {id:11, skin:"威龙红狼小麦三红皮  MP7极品S M7优品B  3刀 超核玩家", assets:"300M", platform:"WEGAME", permission:"提交权", status:"delivered", dataPrice:15000},
+  {id:12, skin:"全红差个蛊 差北极星全刀 威龙全皮", assets:"300M", platform:"WEGAME", permission:"提交权", status:"pending", dataPrice:17500},
+  {id:13, skin:"全刀 砖多", assets:"200M", platform:"WEGAME", permission:"提交权", status:"pending", dataPrice:17000},
+];
+
+const STORAGE_KEY = 'ziwu_accounts';
+let accounts = [];
+let currentFilter = 'all';
+let editMode = false;
+
+function loadAccounts() {
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (stored) {
+    try { accounts = JSON.parse(stored); } catch(e) { accounts = [...defaultAccounts]; }
+    // Merge defaults for new entries
+    if (accounts.length < defaultAccounts.length) {
+      const existingIds = new Set(accounts.map(a=>a.id));
+      defaultAccounts.forEach(a => { if(!existingIds.has(a.id)) accounts.push({...a}); });
+    }
+  } else {
+    accounts = defaultAccounts.map(a=>({...a}));
+  }
+  accounts.sort((a,b)=>a.id-b.id);
+}
+
+function saveAccounts() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(accounts));
+}
+
+function formatPrice(v) { return '¥' + Number(v).toLocaleString(); }
+
+// ========== Render ==========
+function renderStats() {
+  const total = accounts.length;
+  const delivered = accounts.filter(a=>a.status==='delivered').length;
+  const pending = accounts.filter(a=>a.status==='pending').length;
+  const totalValue = accounts.reduce((s,a)=>s+(Number(a.dataPrice)||0), 0);
+  document.getElementById('statsGrid').innerHTML = `
+    <div class="stat-card"><div class="stat-label">账号总数</div><div class="stat-value">${total}</div></div>
+    <div class="stat-card"><div class="stat-label">已交付</div><div class="stat-value" style="color:var(--green)">${delivered}</div></div>
+    <div class="stat-card"><div class="stat-label">未交付</div><div class="stat-value" style="color:var(--orange)">${pending}</div></div>
+    <div class="stat-card"><div class="stat-label">总货值</div><div class="stat-value">${formatPrice(totalValue)}</div></div>
+  `;
+}
+
+function renderTable() {
+  const q = (document.getElementById('searchInput').value||'').toLowerCase();
+  let filtered = accounts;
+  if (currentFilter === 'delivered') filtered = filtered.filter(a=>a.status==='delivered');
+  if (currentFilter === 'pending') filtered = filtered.filter(a=>a.status==='pending');
+  if (q) filtered = filtered.filter(a=>a.skin.toLowerCase().includes(q) || String(a.id).includes(q) || String(a.dataPrice).includes(q));
+
+  const rows = filtered.map(a => `
+    <tr>
+      <td style="color:var(--text-secondary);font-weight:500;">#${String(a.id).padStart(3,'0')}</td>
+      <td>
+        <div style="font-weight:500;margin-bottom:2px;">PRO ACCOUNT ${String(a.id).padStart(2,'0')}</div>
+        <div style="font-size:0.78rem;color:var(--text-secondary);max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escHtml(a.skin)}</div>
+      </td>
+      <td style="font-weight:500;">${escHtml(a.assets)}</td>
+      <td>${escHtml(a.platform)}</td>
+      <td>${escHtml(a.permission)}</td>
+      <td>
+        <span class="status-badge ${a.status}" onclick="toggleStatus(${a.id})" title="点击切换状态">
+          ${a.status==='delivered'?'● 已交付':'○ 未交付'}
+        </span>
+      </td>
+      <td style="font-weight:600;font-size:0.95rem;">${formatPrice(a.dataPrice)}</td>
+      <td>
+        <button class="action-btn edit-btn" onclick="editAccount(${a.id})">✎</button>
+        <button class="action-btn del-btn" onclick="deleteAccount(${a.id})">✕</button>
+      </td>
+    </tr>
+  `).join('');
+
+  document.getElementById('tableBody').innerHTML = rows || '<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--text-secondary);">无匹配结果</td></tr>';
+}
+
+// ========== Actions ==========
+function setFilter(f, el) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderTable();
+}
+
+function toggleStatus(id) {
+  const a = accounts.find(a=>a.id===id);
+  if (!a) return;
+  a.status = a.status==='delivered'?'pending':'delivered';
+  saveAccounts();
+  renderTable();
+  renderStats();
+  toast(`#${String(id).padStart(3,'0')} 状态已切换为「${a.status==='delivered'?'已交付':'未交付'}」`);
+}
+
+function editAccount(id) {
+  const a = accounts.find(a=>a.id===id);
+  if (!a) return;
+  editMode = true;
+  document.getElementById('modalTitle').textContent = `编辑 #${String(id).padStart(3,'0')}`;
+  document.getElementById('editId').value = id;
+  document.getElementById('skin').value = a.skin;
+  document.getElementById('assets').value = a.assets;
+  document.getElementById('dataPrice').value = a.dataPrice;
+  document.getElementById('platform').value = a.platform;
+  document.getElementById('permission').value = a.permission;
+  document.getElementById('status').value = a.status;
+  document.getElementById('modalOverlay').classList.add('active');
+}
+
+function deleteAccount(id) {
+  if (!confirm(`确认删除 #${String(id).padStart(3,'0')}？`)) return;
+  accounts = accounts.filter(a=>a.id!==id);
+  saveAccounts();
+  renderTable();
+  renderStats();
+  toast(`#${String(id).padStart(3,'0')} 已删除`);
+}
+
+function openModal() {
+  editMode = false;
+  document.getElementById('modalTitle').textContent = '新增账号';
+  document.getElementById('editId').value = '';
+  document.getElementById('skin').value = '';
+  document.getElementById('assets').value = '';
+  document.getElementById('dataPrice').value = '';
+  document.getElementById('platform').value = 'WEGAME';
+  document.getElementById('permission').value = '提交权';
+  document.getElementById('status').value = 'pending';
+  document.getElementById('modalOverlay').classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('active');
+}
+
+function saveAccount(e) {
+  e.preventDefault();
+  const id = document.getElementById('editId').value;
+  const data = {
+    skin: document.getElementById('skin').value.trim(),
+    assets: document.getElementById('assets').value.trim(),
+    dataPrice: Number(document.getElementById('dataPrice').value) || 0,
+    platform: document.getElementById('platform').value,
+    permission: document.getElementById('permission').value,
+    status: document.getElementById('status').value,
+  };
+  if (!data.skin || !data.assets || !data.dataPrice) {
+    toast('请填写完整信息'); return;
+  }
+
+  if (editMode) {
+    const idx = accounts.findIndex(a=>a.id===Number(id));
+    if (idx>=0) { accounts[idx] = {...accounts[idx], ...data}; }
+  } else {
+    const maxId = accounts.reduce((m,a)=>Math.max(m,a.id), 0);
+    accounts.push({...data, id: maxId+1});
+  }
+  accounts.sort((a,b)=>a.id-b.id);
+  saveAccounts();
+  closeModal();
+  renderTable();
+  renderStats();
+  toast(editMode ? '账号已更新' : '新账号已添加');
+}
+
+// ========== Export ==========
+function toggleExport() {
+  const ta = document.getElementById('exportText');
+  ta.classList.toggle('visible');
+  if (ta.classList.contains('visible')) {
+    ta.value = JSON.stringify(accounts, null, 2);
+  }
+}
+
+function exportCSV() {
+  const header = 'ID,Skin,Assets,Platform,Permission,Status,Price';
+  const rows = accounts.map(a=>`${a.id},"${a.skin.replace(/"/g,'""')}",${a.assets},${a.platform},${a.permission},${a.status==='delivered'?'已交付':'未交付'},${a.dataPrice}`);
+  const csv = [header, ...rows].join('\n');
+  const blob = new Blob(['\ufeff'+csv], {type:'text/csv;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'ziwu_accounts.csv'; a.click();
+  URL.revokeObjectURL(url);
+  toast('CSV 已导出');
+}
+
+// ========== Theme ==========
+function toggleTheme() {
+  document.body.classList.toggle('light');
+  localStorage.setItem('ziwu_admin_theme', document.body.classList.contains('light')?'light':'dark');
+}
+if (localStorage.getItem('ziwu_admin_theme')==='light') document.body.classList.add('light');
+
+// ========== Utils ==========
+function escHtml(s) { const d=document.createElement('div');d.textContent=s;return d.innerHTML; }
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._tid); t._tid = setTimeout(()=>t.classList.remove('show'), 2000);
+}
+
+// ========== Init ==========
+loadAccounts();
+renderStats();
+renderTable();
+
+// Close modal on overlay click
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+</script>
+</body>
+</html>
