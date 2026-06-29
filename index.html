@@ -748,6 +748,21 @@ body {
           <img src="5e053bb26ee2627918b24ebbc6a279e1_thumb.webp" data-full="5e053bb26ee2627918b24ebbc6a279e1.webp" alt="代选购账号说明" style="width:100%; max-width:280px; border-radius:8px; border:1px solid rgba(255,255,255,0.06);">
         </div>
       </div>
+
+      <!-- 硬件层双转 -->
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4a853" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 7h4v4H7zM13 7h4v4h-4zM7 13h4v4H7zM13 13h4v4h-4z"/></svg>
+        </div>
+        <h3>硬件层双转</h3>
+        <p>替代板子·板子无限被加密解密慢问题——完美无视加密全部解决· 无任何200T及拖框加密问题《自行购买绿联3.0对拷线 随后找我测试》</p>
+        <div class="service-note">
+          测试时间6.30～7.3 期间可购买天卡测试，后续只供月卡 进行名额审核
+        </div>
+        <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+          <button class="btn-primary btn-buy" data-name="硬件层双转" data-price="0">立即购买</button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1548,7 +1563,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   document.querySelectorAll('.btn-buy').forEach(function(btn) {
     btn.addEventListener('click', function() {
       productName.textContent = btn.getAttribute('data-name');
-      productPrice.textContent = '\u00a5' + Number(btn.getAttribute('data-price')).toLocaleString();
+      var price = Number(btn.getAttribute('data-price'));
+      productPrice.textContent = price > 0 ? '\u00a5' + price.toLocaleString() : '联系咨询';
       overlay.classList.add('active');
       document.body.style.overflow = 'hidden';
     });
